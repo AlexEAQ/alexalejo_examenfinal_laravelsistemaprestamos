@@ -1,85 +1,101 @@
-@extends("maestra")
-@section("titulo")
-    Registrar
-@endsection
-@section('contenido')
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Registrar</div>
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{config("app.name")}}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Admin, Dashboard, Bootstrap" />
+    <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.png">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+    <link rel="stylesheet" href="{{ asset('libs/bower/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/bower/animate.css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/misc-pages.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
+</head>
+<body class="simple-page">
+<div id="back-to-home">
+    <a href="index.html" class="btn btn-outline btn-default"><i class="fa fa-home animated zoomIn"></i></a>
+</div>
+<div class="simple-page-wrap">
+    <div class="simple-page-logo animated swing">
+        <a href="index.html">
+            <span><i class="fa fa-gg"></i></span>
+            <span>Infinity</span>
+        </a>
+    </div><!-- logo -->
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
+    <div class="simple-page-form animated flipInY" id="signup-form">
+        <h4 class="form-title m-b-xl text-center">Sign Up For a new Account</h4>
+        <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+            {{ csrf_field() }}
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                       name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
+                <div class="col-md-12">
+                    <input id="name" type="text" class="form-control" placeholder="Nombre" name="name" value="{{ old('name') }}" required autofocus>
 
-                        <div class="form-group row">
-                            <label for="email"
-                                   class="col-md-4 col-form-label text-md-right">Correo electrónico</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                       name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password"
-                                   class="col-md-4 col-form-label text-md-right">Contraseña</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password"
-                                       class="form-control @error('password') is-invalid @enderror" name="password"
-                                       required autocomplete="new-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm"
-                                   class="col-md-4 col-form-label text-md-right">Confirmar contraseña</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control"
-                                       name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Registrar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    @if ($errors->has('name'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                    @endif
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+
+            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <div class="col-md-12">
+                    <input id="email" type="email" placeholder="Email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+
+                <div class="col-md-12">
+                    <input id="password" type="password" placeholder="Contraseña" class="form-control" name="password" required>
+
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    <input id="password-confirm" type="password" placeholder="Repetir contraseña" class="form-control" name="password_confirmation" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div><!-- #login-form -->
+
+    <div class="simple-page-footer">
+        <p>
+            <small>Do you have an account ?</small>
+            <a href="login.html">SIGN IN</a>
+        </p>
+    </div><!-- .simple-page-footer -->
+
+
+</div><!-- .simple-page-wrap -->
+</body>
+</html>
